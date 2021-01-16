@@ -19,6 +19,9 @@ namespace WEBApi.Models
         public string Name { get; set; }
         [Column(TypeName = "varchar(500)")]
         public string Description { get; set; }
+        [Required]
+        public int TimeToComplete { get; set; }
+        public int Times { get; set; }
         public string ImageURL { get; set; }
     }
 }
