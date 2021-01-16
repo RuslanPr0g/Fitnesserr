@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WEBApi.DTOs;
 using WEBApi.Models;
 using WEBApi.Repository;
 
@@ -13,15 +15,17 @@ namespace WEBApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepo _repository;
+        private readonly IMapper _mapper;
 
-        public UsersController(IUserRepo repository)
+        public UsersController(IUserRepo repository, IMapper mapper)
         {
             this._repository = repository;
+            this._mapper = mapper;
         }
 
         // GET: api/Users
         [HttpGet]
-        public ActionResult<IEnumerable<User>> Get()
+        public ActionResult<IEnumerable<UserReadDto>> Get()
         {
             var users = _repository.GetUsers();
 
@@ -30,11 +34,11 @@ namespace WEBApi.Controllers
 
         // GET api/Users/guid
         [HttpGet("{id}")]
-        public ActionResult<User> Get(Guid id)
+        public ActionResult<UserReadDto> Get(Guid id)
         {
             var user = _repository.GetUser(id);
 
-            return Ok(user);
+            return user is null ? NotFound() : Ok(user);
         }
 
         // POST api/Users

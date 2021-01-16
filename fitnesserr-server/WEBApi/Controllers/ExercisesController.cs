@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WEBApi.DTOs;
 using WEBApi.Models;
 using WEBApi.Repository;
 
@@ -13,15 +15,17 @@ namespace WEBApi.Controllers
     public class ExercisesController : ControllerBase
     {
         private readonly IExerciseRepo _repository;
+        private readonly IMapper _mapper;
 
-        public ExercisesController(IExerciseRepo repository)
+        public ExercisesController(IExerciseRepo repository, IMapper mapper)
         {
             this._repository = repository;
+            this._mapper = mapper;
         }
 
         // GET: api/Exercises
         [HttpGet]
-        public ActionResult<IEnumerable<Exercise>> Get()
+        public ActionResult<IEnumerable<ExerciseReadDto>> Get()
         {
             var exercises = _repository.GetExercises();
 
@@ -30,7 +34,7 @@ namespace WEBApi.Controllers
 
         // GET api/Exercises/guid
         [HttpGet("{id}")]
-        public ActionResult<Exercise> Get(Guid id)
+        public ActionResult<ExerciseReadDto> Get(Guid id)
         {
             var exercise = _repository.GetExercise(id);
 
