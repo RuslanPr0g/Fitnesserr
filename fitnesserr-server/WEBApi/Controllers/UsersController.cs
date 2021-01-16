@@ -29,7 +29,7 @@ namespace WEBApi.Controllers
         {
             var users = _repository.GetUsers();
 
-            return Ok(users);
+            return Ok(_mapper.Map<IEnumerable<UserReadDto>>(users));
         }
 
         // GET api/Users/guid
@@ -38,7 +38,7 @@ namespace WEBApi.Controllers
         {
             var user = _repository.GetUser(id);
 
-            return user is null ? NotFound() : Ok(user);
+            return user is null ? NotFound() : Ok(_mapper.Map<UserReadDto>(user));
         }
 
         // POST api/Users

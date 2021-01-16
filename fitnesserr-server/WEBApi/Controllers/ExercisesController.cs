@@ -29,7 +29,7 @@ namespace WEBApi.Controllers
         {
             var exercises = _repository.GetExercises();
 
-            return Ok(exercises);
+            return Ok(_mapper.Map<IEnumerable<ExerciseReadDto>>(exercises));
         }
 
         // GET api/Exercises/guid
@@ -38,7 +38,7 @@ namespace WEBApi.Controllers
         {
             var exercise = _repository.GetExercise(id);
 
-            return Ok(exercise);
+            return Ok(_mapper.Map<ExerciseReadDto>(exercise));
         }
 
         // POST api/Exercises

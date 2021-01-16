@@ -30,7 +30,7 @@ namespace WEBApi.Controllers
         {
             var trainingDone = _repository.GetTrainingDone();
 
-            return Ok(trainingDone);
+            return Ok(_mapper.Map<IEnumerable<TrainingDoneReadDto>>(trainingDone));
         }
 
         // GET api/TrainingDone/guid
@@ -39,7 +39,7 @@ namespace WEBApi.Controllers
         {
             var trainingDone = _repository.GetTrainingDone(userId);
 
-            return Ok(trainingDone);
+            return Ok(_mapper.Map<IEnumerable<TrainingDoneReadDto>>(trainingDone));
         }
 
         // POST api/TrainingDone
