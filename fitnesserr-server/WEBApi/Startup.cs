@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,6 +39,8 @@ namespace WEBApi
             services.AddDbContext<TrainingContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("StandardSQLServer"),
                         options => options.MigrationsAssembly(nameof(WEBApi))));
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<ITrainingProgramRepo, TrainingProgramRepo>();
