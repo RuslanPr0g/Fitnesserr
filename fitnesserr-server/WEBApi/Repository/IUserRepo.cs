@@ -8,7 +8,10 @@ namespace WEBApi.Repository
 {
     public interface IUserRepo
     {
+        bool SaveChanges();
+
         IEnumerable<User> GetUsers();
         User GetUser(Guid id);
+        void RegisterUser(User user);
     }
 }

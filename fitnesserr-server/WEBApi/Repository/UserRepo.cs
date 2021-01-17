@@ -29,5 +29,18 @@ namespace WEBApi.Repository
                 .Include(t => t.TrainingPrograms)
                 .ToList();
         }
+
+        public void RegisterUser(User user)
+        {
+            if (user is null)
+                throw new ArgumentNullException(nameof(user));
+
+            _context.Users.Add(user);
+        }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
+        }
     }
 }

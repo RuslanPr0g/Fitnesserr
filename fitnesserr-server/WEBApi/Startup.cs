@@ -34,7 +34,7 @@ namespace WEBApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WEBApi", Version = "v1" });
             });
-
+            
             services.AddDbContext<TrainingContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("StandardSQLServer"),
                         options => options.MigrationsAssembly(nameof(WEBApi))));
