@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WEBApi.DTOs;
 using WEBApi.Models;
 using WEBApi.Repository;
 
@@ -13,47 +15,59 @@ namespace WEBApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepo _repository;
+        private readonly IMapper _mapper;
 
-        public UsersController(IUserRepo repository)
+        public UsersController(IUserRepo repository, IMapper mapper)
         {
             this._repository = repository;
+            this._mapper = mapper;
         }
 
         // GET: api/Users
         [HttpGet]
-        public ActionResult<IEnumerable<User>> Get()
+        public async Task<ActionResult<IEnumerable<UserReadDto>>> Get()
         {
-            var users = _repository.GetUsers();
+            var users = await _repository.GetUsersAsync();
 
-            return Ok(users);
+            return Ok(_mapper.Map<IEnumerable<UserReadDto>>(users));
         }
 
         // GET api/Users/guid
         [HttpGet("{id}")]
-        public ActionResult<User> Get(Guid id)
+        public async Task<ActionResult<UserReadDto>> Get(Guid id)
         {
-            var user = _repository.GetUser(id);
+            var user = await _repository.GetUserAsync(id);
 
-            return Ok(user);
+            return user is null ? NotFound() : Ok(_mapper.Map<UserReadDto>(user));
         }
 
         // POST api/Users
         [HttpPost]
-        public void Post([FromBody] User value)
+        public async Task<ActionResult<UserReadDto>> Post([FromBody] UserCreateDto user)
         {
-            // add User
+            // TODO: validate the user, token, etc..
+
+            var userModel = _mapper.Map<User>(user);
+
+            await _repository.RegisterUserAsync(userModel);
+
+            await _repository.SaveChangesAsync();
+
+            var userResponseModel = _mapper.Map<UserReadDto>(userModel);
+
+            return Ok(userResponseModel);
         }
 
         // PUT api/Users/guid
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] User value)
+        public void Put(Guid id, [FromBody] User user)
         {
             // update User
         }
 
         // DELETE api/Users/guid
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             // delete User
         }

@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,16 +29,17 @@ namespace WEBApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WEBApi", Version = "v1" });
             });
-
+            
             services.AddDbContext<TrainingContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("StandardSQLServer"),
                         options => options.MigrationsAssembly(nameof(WEBApi))));
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<ITrainingProgramRepo, TrainingProgramRepo>();

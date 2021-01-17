@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WEBApi.DTOs;
 using WEBApi.Models;
 using WEBApi.Repository;
 
@@ -13,35 +15,45 @@ namespace WEBApi.Controllers
     public class TrainingProgramsController : ControllerBase
     {
         private readonly ITrainingProgramRepo _repository;
+        private readonly IMapper _mapper;
 
-        public TrainingProgramsController(ITrainingProgramRepo repository)
+        public TrainingProgramsController(ITrainingProgramRepo repository, IMapper mapper)
         {
             this._repository = repository;
+            this._mapper = mapper;
         }
 
         // GET: api/TrainingPrograms
         [HttpGet]
-        public ActionResult<IEnumerable<TrainingProgram>> Get()
+        public async Task<ActionResult<IEnumerable<TrainingProgramReadDto>>> Get()
         {
-            var trainingPrograms = _repository.GetTrainings();
+            var trainingPrograms = await _repository.GetTrainingsAsync();
 
-            return Ok(trainingPrograms);
+            return Ok(_mapper.Map<IEnumerable<TrainingProgramReadDto>>(trainingPrograms));
         }
 
         // GET api/TrainingPrograms/guid
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<TrainingProgram>> Get(Guid userId)
+        public async Task<ActionResult<IEnumerable<TrainingProgramReadDto>>>  Get(Guid userId)
         {
-            var trainingProgram = _repository.GetTrainings(userId);
+            var trainingProgram = await _repository.GetTrainingsAsync(userId);
 
-            return Ok(trainingProgram);
+            return Ok(_mapper.Map<IEnumerable<TrainingProgramReadDto>>(trainingProgram));
         }
 
         // POST api/TrainingPrograms
         [HttpPost]
-        public void Post([FromBody] TrainingProgram value)
+        public async Task<ActionResult<TrainingProgramReadDto>> Post([FromBody] TrainingProgramCreateDto training)
         {
-            // add TrainingProgram
+            var trainingProgramModel = _mapper.Map<TrainingProgram>(training);
+
+            await _repository.AddTrainingAsync(trainingProgramModel);
+
+            await _repository.SaveChangesAsync();
+
+            var trainingProgramResponseModel = _mapper.Map<TrainingProgramReadDto>(trainingProgramModel);
+
+            return Ok(trainingProgramResponseModel);
         }
 
         // PUT api/TrainingPrograms/guid

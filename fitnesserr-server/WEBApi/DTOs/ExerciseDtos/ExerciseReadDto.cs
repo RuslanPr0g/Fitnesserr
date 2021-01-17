@@ -1,25 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace WEBApi.Models
+namespace WEBApi.DTOs
 {
-    public class Exercise
+    public class ExerciseReadDto
     {
-        [Key]
-        [Required]
         public Guid Id { get; set; }
-        [Required]
         public Guid TrainingId { get; set; }
-        [Required]
         public int Order { get; set; }
-        [Required]
-        [Column(TypeName = "varchar(100)")]
         public string Name { get; set; }
-        [Column(TypeName = "varchar(500)")]
         public string Description { get; set; }
-        [Required]
         public int TimeToComplete { get; set; }
         public int Times { get; set; }
         public string ImageURL { get; set; }

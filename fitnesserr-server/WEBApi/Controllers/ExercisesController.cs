@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WEBApi.DTOs;
 using WEBApi.Models;
 using WEBApi.Repository;
 
@@ -13,40 +15,50 @@ namespace WEBApi.Controllers
     public class ExercisesController : ControllerBase
     {
         private readonly IExerciseRepo _repository;
+        private readonly IMapper _mapper;
 
-        public ExercisesController(IExerciseRepo repository)
+        public ExercisesController(IExerciseRepo repository, IMapper mapper)
         {
             this._repository = repository;
+            this._mapper = mapper;
         }
 
         // GET: api/Exercises
         [HttpGet]
-        public ActionResult<IEnumerable<Exercise>> Get()
+        public async Task<ActionResult<IEnumerable<ExerciseReadDto>>> Get()
         {
-            var exercises = _repository.GetExercises();
+            var exercises = await _repository.GetExercisesAsync();
 
-            return Ok(exercises);
+            return Ok(_mapper.Map<IEnumerable<ExerciseReadDto>>(exercises));
         }
 
         // GET api/Exercises/guid
         [HttpGet("{id}")]
-        public ActionResult<Exercise> Get(Guid id)
+        public async Task<ActionResult<ExerciseReadDto>> Get(Guid id)
         {
-            var exercise = _repository.GetExercise(id);
+            var exercise = await _repository.GetExerciseAsync(id);
 
-            return Ok(exercise);
+            return Ok(_mapper.Map<ExerciseReadDto>(exercise));
         }
 
         // POST api/Exercises
         [HttpPost]
-        public void Post([FromBody] Exercise value)
+        public async Task<ActionResult<ExerciseReadDto>> Post([FromBody] ExerciseCreateDto exercise)
         {
-            // add exercise to Training
+            var exerciseModel = _mapper.Map<Exercise>(exercise);
+
+            await _repository.AddExerciseAsync(exerciseModel);
+
+            await _repository.SaveChangesAsync();
+
+            var exerciseResponseModel = _mapper.Map<ExerciseReadDto>(exerciseModel);
+
+            return Ok(exerciseResponseModel);
         }
 
         // PUT api/Exercises/guid
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] Exercise value)
+        public void Put(Guid id, [FromBody] Exercise exercise)
         {
             // update Exercise
         }
