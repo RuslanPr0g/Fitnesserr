@@ -8,7 +8,10 @@ namespace WEBApi.Repository
 {
     public interface ITrainingProgramRepo
     {
+        bool SaveChanges();
+
         IEnumerable<TrainingProgram> GetTrainings();
         IEnumerable<TrainingProgram> GetTrainings(Guid ownerId);
+        void AddTraining(TrainingProgram training);
     }
 }

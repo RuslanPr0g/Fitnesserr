@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WEBApi.DTOs;
 using WEBApi.Models;
 using AutoMapper;
+using WEBApi.DTOs.TrainingDtos;
 
 namespace WEBApi.Profiles
 {
@@ -13,6 +14,7 @@ namespace WEBApi.Profiles
         public TrainingsProfile()
         {
             CreateMap<Training, TrainingReadDto>();
+            CreateMap<TrainingCreateDto, Training>();
         }
     }
 }

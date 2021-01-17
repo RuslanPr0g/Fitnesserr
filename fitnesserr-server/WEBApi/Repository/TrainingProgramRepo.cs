@@ -16,6 +16,14 @@ namespace WEBApi.Repository
             this._context = context;
         }
 
+        public void AddTraining(TrainingProgram training)
+        {
+            if (training is null)
+                throw new ArgumentNullException(nameof(training));
+
+            _context.TrainingPrograms.Add(training);
+        }
+
         public IEnumerable<TrainingProgram> GetTrainings()
         {
             return _context.TrainingPrograms.ToList();
@@ -24,6 +32,11 @@ namespace WEBApi.Repository
         public IEnumerable<TrainingProgram> GetTrainings(Guid ownerId)
         {
             return _context.TrainingPrograms.Where(t => t.UserId == ownerId).ToList();
+        }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
         }
     }
 }

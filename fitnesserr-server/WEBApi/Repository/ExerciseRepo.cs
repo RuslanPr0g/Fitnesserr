@@ -16,6 +16,14 @@ namespace WEBApi.Repository
             this._context = context;
         }
 
+        public void AddExercise(Exercise exercise)
+        {
+            if (exercise is null)
+                throw new ArgumentNullException(nameof(exercise));
+
+            _context.Exercises.Add(exercise);
+        }
+
         public Exercise GetExercise(Guid id)
         {
             return _context.Exercises.FirstOrDefault(u => u.Id == id);
@@ -24,6 +32,11 @@ namespace WEBApi.Repository
         public IEnumerable<Exercise> GetExercises()
         {
             return _context.Exercises.ToList();
+        }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
         }
     }
 }

@@ -53,7 +53,9 @@ namespace WEBApi.Controllers
 
             _repository.SaveChanges();
 
-            return Ok(userModel);
+            var userResponseModel = _mapper.Map<UserReadDto>(userModel);
+
+            return Ok(userResponseModel);
         }
 
         // PUT api/Users/guid

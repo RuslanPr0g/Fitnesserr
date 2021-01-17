@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WEBApi.DTOs;
+using WEBApi.DTOs.TrainingProgramDtos;
 using WEBApi.Models;
 
 namespace WEBApi.Profiles
@@ -13,6 +14,7 @@ namespace WEBApi.Profiles
         public TrainingProgramProfile()
         {
             CreateMap<TrainingProgram, TrainingProgramReadDto>();
+            CreateMap<TrainingProgramCreateDto, TrainingProgram>();
         }
     }
 }

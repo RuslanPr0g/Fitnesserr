@@ -16,6 +16,14 @@ namespace WEBApi.Repository
             this._context = context;
         }
 
+        public void FinishTraining(TrainingDone training)
+        {
+            if (training is null)
+                throw new ArgumentNullException(nameof(training));
+
+            _context.TrainingDone.Add(training);
+        }
+
         public IEnumerable<TrainingDone> GetTrainingDone()
         {
             return _context.TrainingDone.ToList();
@@ -24,6 +32,11 @@ namespace WEBApi.Repository
         public IEnumerable<TrainingDone> GetTrainingDone(Guid id)
         {
             return _context.TrainingDone.Where(t => t.Id == id).ToList();
+        }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
         }
     }
 }

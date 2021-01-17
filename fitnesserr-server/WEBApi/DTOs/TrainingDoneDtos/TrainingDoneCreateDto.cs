@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-namespace WEBApi.Models
+using System.Threading.Tasks;
+
+namespace WEBApi.DTOs.TrainingDoneDtos
 {
-    public class TrainingDone
+    public class TrainingDoneCreateDto
     {
-        [Key]
-        [Required]
-        public Guid Id { get; set; }
-        [Required]
         public Guid UserId { get; set; }
-        [Required]
         public Guid TrainingId { get; set; }
-        [Required]
         public DateTime DateDone { get; set; } = DateTime.Now;
-        [Required]
         public int TimeDone { get; set; }
     }
 }
