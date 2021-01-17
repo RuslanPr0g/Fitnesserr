@@ -25,31 +25,31 @@ namespace WEBApi.Controllers
 
         // GET: api/Exercises
         [HttpGet]
-        public ActionResult<IEnumerable<ExerciseReadDto>> Get()
+        public async Task<ActionResult<IEnumerable<ExerciseReadDto>>> Get()
         {
-            var exercises = _repository.GetExercises();
+            var exercises = await _repository.GetExercisesAsync();
 
             return Ok(_mapper.Map<IEnumerable<ExerciseReadDto>>(exercises));
         }
 
         // GET api/Exercises/guid
         [HttpGet("{id}")]
-        public ActionResult<ExerciseReadDto> Get(Guid id)
+        public async Task<ActionResult<ExerciseReadDto>> Get(Guid id)
         {
-            var exercise = _repository.GetExercise(id);
+            var exercise = await _repository.GetExerciseAsync(id);
 
             return Ok(_mapper.Map<ExerciseReadDto>(exercise));
         }
 
         // POST api/Exercises
         [HttpPost]
-        public ActionResult<ExerciseReadDto> Post([FromBody] ExerciseCreateDto exercise)
+        public async Task<ActionResult<ExerciseReadDto>> Post([FromBody] ExerciseCreateDto exercise)
         {
             var exerciseModel = _mapper.Map<Exercise>(exercise);
 
-            _repository.AddExercise(exerciseModel);
+            await _repository.AddExerciseAsync(exerciseModel);
 
-            _repository.SaveChanges();
+            await _repository.SaveChangesAsync();
 
             var exerciseResponseModel = _mapper.Map<ExerciseReadDto>(exerciseModel);
 

@@ -8,10 +8,10 @@ namespace WEBApi.Repository
 {
     public interface IExerciseRepo
     {
-        bool SaveChanges();
+        Task<bool> SaveChangesAsync();
 
-        IEnumerable<Exercise> GetExercises();
-        Exercise GetExercise(Guid id);
-        void AddExercise(Exercise exercise);
+        Task<IEnumerable<Exercise>> GetExercisesAsync();
+        Task<Exercise> GetExerciseAsync(Guid id);
+        Task AddExerciseAsync(Exercise exercise);
     }
 }

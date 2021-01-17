@@ -17,30 +17,30 @@ namespace WEBApi.Repository
             this._context = context;
         }
 
-        public User GetUser(Guid id)
+        public async Task<User> GetUserAsync(Guid id)
         {
-            return _context.Users.FirstOrDefault(u => u.Id == id);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public IEnumerable<User> GetUsers()
+        public async Task<IEnumerable<User>> GetUsersAsync()
         {
-            return _context.Users
+            return await _context.Users
                 .Include(t => t.TrainingDones)
                 .Include(t => t.TrainingPrograms)
-                .ToList();
+                .ToListAsync();
         }
 
-        public void RegisterUser(User user)
+        public async Task RegisterUserAsync(User user)
         {
             if (user is null)
                 throw new ArgumentNullException(nameof(user));
 
-            _context.Users.Add(user);
+            await _context.Users.AddAsync(user);
         }
 
-        public bool SaveChanges()
+        public async Task<bool> SaveChangesAsync()
         {
-            return (_context.SaveChanges() >= 0);
+            return (await _context.SaveChangesAsync() >= 0);
         }
     }
 }

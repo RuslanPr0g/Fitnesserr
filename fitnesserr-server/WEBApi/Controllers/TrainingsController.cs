@@ -25,31 +25,31 @@ namespace WEBApi.Controllers
 
         // GET: api/Trainings
         [HttpGet]
-        public ActionResult<IEnumerable<TrainingReadDto>> Get()
+        public async Task<ActionResult<IEnumerable<TrainingReadDto>>> Get()
         {
-            var trainingPrograms = _repository.GetTrainings();
+            var trainingPrograms = await _repository.GetTrainingsAsync();
 
             return Ok(_mapper.Map<IEnumerable<TrainingReadDto>>(trainingPrograms));
         }
 
         // GET api/Trainings/guid
         [HttpGet("{id}")]
-        public ActionResult<TrainingReadDto> Get(Guid id)
+        public async Task<ActionResult<TrainingReadDto>> Get(Guid id)
         {
-            var trainingPrograms = _repository.GetTrainings();
+            var trainingPrograms = await _repository.GetTrainingsAsync();
 
             return Ok(_mapper.Map<TrainingReadDto>(trainingPrograms));
         }
 
         // POST api/Trainings
         [HttpPost]
-        public ActionResult<TrainingReadDto> Post([FromBody] TrainingCreateDto training)
+        public async Task<ActionResult<TrainingReadDto>> Post([FromBody] TrainingCreateDto training)
         {
             var trainingModel = _mapper.Map<Training>(training);
 
-            _repository.AddTraining(trainingModel);
+            await _repository.AddTrainingAsync(trainingModel);
 
-            _repository.SaveChanges();
+            await _repository.SaveChangesAsync();
 
             var trainingResponseModel = _mapper.Map<TrainingReadDto>(trainingModel);
 

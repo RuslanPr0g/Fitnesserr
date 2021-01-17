@@ -26,31 +26,31 @@ namespace WEBApi.Controllers
 
         // GET: api/TrainingDone
         [HttpGet]
-        public ActionResult<IEnumerable<TrainingDoneReadDto>> Get()
+        public async Task<ActionResult<IEnumerable<TrainingDoneReadDto>>> Get()
         {
-            var trainingDone = _repository.GetTrainingDone();
+            var trainingDone = await _repository.GetTrainingDoneAsync();
 
             return Ok(_mapper.Map<IEnumerable<TrainingDoneReadDto>>(trainingDone));
         }
 
         // GET api/TrainingDone/guid
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<TrainingDoneReadDto>> Get(Guid userId)
+        public async Task<ActionResult<IEnumerable<TrainingDoneReadDto>>> Get(Guid userId)
         {
-            var trainingDone = _repository.GetTrainingDone(userId);
+            var trainingDone = await _repository.GetTrainingDoneAsync(userId);
 
             return Ok(_mapper.Map<IEnumerable<TrainingDoneReadDto>>(trainingDone));
         }
 
         // POST api/TrainingDone
         [HttpPost]
-        public ActionResult<TrainingDoneReadDto> Post([FromBody] TrainingDoneCreateDto training)
+        public async Task<ActionResult<TrainingDoneReadDto>> Post([FromBody] TrainingDoneCreateDto training)
         {
             var trainingDoneModel = _mapper.Map<TrainingDone>(training);
 
-            _repository.FinishTraining(trainingDoneModel);
+            await _repository.FinishTrainingAsync(trainingDoneModel);
 
-            _repository.SaveChanges();
+            await _repository.SaveChangesAsync();
 
             var trainingDoneResponseModel = _mapper.Map<TrainingDoneReadDto>(trainingDoneModel);
 

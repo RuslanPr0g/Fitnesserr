@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,27 +17,27 @@ namespace WEBApi.Repository
             this._context = context;
         }
 
-        public void AddTraining(Training training)
+        public async Task AddTrainingAsync(Training training)
         {
             if (training is null)
                 throw new ArgumentNullException(nameof(training));
 
-            _context.Trainings.Add(training);
+            await _context.Trainings.AddAsync(training);
         }
 
-        public Training GetTraining(Guid id)
+        public async Task<Training> GetTrainingAsync(Guid id)
         {
-            return _context.Trainings.FirstOrDefault(t => t.Id == id);
+            return await _context.Trainings.FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public IEnumerable<Training> GetTrainings()
+        public async Task<IEnumerable<Training>> GetTrainingsAsync()
         {
-            return _context.Trainings.ToList();
+            return await _context.Trainings.ToListAsync();
         }
 
-        public bool SaveChanges()
+        public async Task<bool> SaveChangesAsync()
         {
-            return (_context.SaveChanges() >= 0);
+            return (await _context.SaveChangesAsync() >= 0);
         }
     }
 }

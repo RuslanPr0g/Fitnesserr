@@ -25,33 +25,33 @@ namespace WEBApi.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public ActionResult<IEnumerable<UserReadDto>> Get()
+        public async Task<ActionResult<IEnumerable<UserReadDto>>> Get()
         {
-            var users = _repository.GetUsers();
+            var users = await _repository.GetUsersAsync();
 
             return Ok(_mapper.Map<IEnumerable<UserReadDto>>(users));
         }
 
         // GET api/Users/guid
         [HttpGet("{id}")]
-        public ActionResult<UserReadDto> Get(Guid id)
+        public async Task<ActionResult<UserReadDto>> Get(Guid id)
         {
-            var user = _repository.GetUser(id);
+            var user = await _repository.GetUserAsync(id);
 
             return user is null ? NotFound() : Ok(_mapper.Map<UserReadDto>(user));
         }
 
         // POST api/Users
         [HttpPost]
-        public ActionResult<UserReadDto> Post([FromBody] UserCreateDto user)
+        public async Task<ActionResult<UserReadDto>> Post([FromBody] UserCreateDto user)
         {
             // TODO: validate the user, token, etc..
 
             var userModel = _mapper.Map<User>(user);
 
-            _repository.RegisterUser(userModel);
+            await _repository.RegisterUserAsync(userModel);
 
-            _repository.SaveChanges();
+            await _repository.SaveChangesAsync();
 
             var userResponseModel = _mapper.Map<UserReadDto>(userModel);
 
