@@ -43,21 +43,29 @@ namespace WEBApi.Controllers
 
         // POST api/Users
         [HttpPost]
-        public void Post([FromBody] User value)
+        public ActionResult<UserReadDto> Post([FromBody] UserCreateDto user)
         {
-            // add User
+            // TODO: validate the user, token, etc..
+
+            var userModel = _mapper.Map<User>(user);
+
+            _repository.RegisterUser(userModel);
+
+            _repository.SaveChanges();
+
+            return Ok(userModel);
         }
 
         // PUT api/Users/guid
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] User value)
+        public void Put(Guid id, [FromBody] User user)
         {
             // update User
         }
 
         // DELETE api/Users/guid
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             // delete User
         }
