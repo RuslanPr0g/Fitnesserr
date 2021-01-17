@@ -43,14 +43,22 @@ namespace WEBApi.Controllers
 
         // POST api/Exercises
         [HttpPost]
-        public void Post([FromBody] Exercise value)
+        public ActionResult<ExerciseReadDto> Post([FromBody] ExerciseCreateDto exercise)
         {
-            // add exercise to Training
+            var exerciseModel = _mapper.Map<Exercise>(exercise);
+
+            _repository.AddExercise(exerciseModel);
+
+            //_repository.SaveChanges();
+
+            var exerciseResponseModel = _mapper.Map<ExerciseReadDto>(exerciseModel);
+
+            return Ok(exerciseResponseModel);
         }
 
         // PUT api/Exercises/guid
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] Exercise value)
+        public void Put(Guid id, [FromBody] Exercise exercise)
         {
             // update Exercise
         }

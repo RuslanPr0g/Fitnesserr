@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WEBApi.DTOs.TrainingDoneDtos
+namespace WEBApi.DTOs
 {
     public class TrainingDoneCreateDto
     {
