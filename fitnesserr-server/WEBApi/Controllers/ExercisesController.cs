@@ -49,7 +49,7 @@ namespace WEBApi.Controllers
 
             _repository.AddExercise(exerciseModel);
 
-            //_repository.SaveChanges();
+            _repository.SaveChanges();
 
             var exerciseResponseModel = _mapper.Map<ExerciseReadDto>(exerciseModel);
 
