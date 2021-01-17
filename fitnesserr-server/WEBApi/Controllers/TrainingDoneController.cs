@@ -44,9 +44,17 @@ namespace WEBApi.Controllers
 
         // POST api/TrainingDone
         [HttpPost]
-        public void Post([FromBody] TrainingDone value)
+        public ActionResult<TrainingDoneReadDto> Post([FromBody] TrainingDoneCreateDto training)
         {
-            // add TrainingDone
+            var trainingDoneModel = _mapper.Map<TrainingDone>(training);
+
+            _repository.FinishTraining(trainingDoneModel);
+
+            _repository.SaveChanges();
+
+            var trainingDoneResponseModel = _mapper.Map<TrainingDoneReadDto>(trainingDoneModel);
+
+            return Ok(trainingDoneResponseModel);
         }
 
         // PUT api/exercises/guid
