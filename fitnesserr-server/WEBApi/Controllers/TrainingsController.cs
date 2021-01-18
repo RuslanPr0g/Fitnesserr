@@ -65,9 +65,21 @@ namespace WEBApi.Controllers
 
         // DELETE api/Trainings/guid
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(Guid id)
         {
-            // delete Training
+            var trainingModeldFromRepo = await _repository.GetTrainingAsync(id);
+
+            if(trainingModeldFromRepo is not null)
+            {
+                _repository.DeleteTraining(trainingModeldFromRepo);
+
+                await _repository.SaveChangesAsync();
+
+                return NoContent();
+            } else
+            {
+                return NotFound();
+            }
         }
     }
 }

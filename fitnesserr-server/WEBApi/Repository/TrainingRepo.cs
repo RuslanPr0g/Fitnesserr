@@ -25,6 +25,14 @@ namespace WEBApi.Repository
             await _context.Trainings.AddAsync(training);
         }
 
+        public void DeleteTraining(Training training)
+        {
+            if (training is null)
+                throw new ArgumentNullException(nameof(training));
+
+            _context.Trainings.Remove(training);
+        }
+
         public async Task<Training> GetTrainingAsync(Guid id)
         {
             return await _context.Trainings.FirstOrDefaultAsync(t => t.Id == id);
