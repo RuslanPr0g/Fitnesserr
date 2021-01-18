@@ -64,12 +64,5 @@ namespace WEBApi.Controllers
         {
             // update User
         }
-
-        // DELETE api/Users/guid
-        [HttpDelete("{id}")]
-        public void Delete(Guid id)
-        {
-            // delete User
-        }
     }
 }
