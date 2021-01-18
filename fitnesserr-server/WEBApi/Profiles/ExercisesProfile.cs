@@ -14,6 +14,8 @@ namespace WEBApi.Profiles
         {
             CreateMap<Exercise, ExerciseReadDto>();
             CreateMap<ExerciseCreateDto, Exercise>();
+            CreateMap<ExerciseUpdateDto, Exercise>();
+            CreateMap<Exercise, ExerciseUpdateDto>();
         }
     }
 }

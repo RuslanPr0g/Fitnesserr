@@ -25,6 +25,14 @@ namespace WEBApi.Repository
             await _context.Exercises.AddAsync(exercise);
         }
 
+        public void DeleteExercise(Exercise exercise)
+        {
+            if (exercise is null)
+                throw new NullReferenceException(nameof(exercise));
+
+            _context.Exercises.Remove(exercise);
+        }
+
         public async Task<Exercise> GetExerciseAsync(Guid id)
         {
             return await _context.Exercises.FirstOrDefaultAsync(u => u.Id == id);
@@ -38,6 +46,11 @@ namespace WEBApi.Repository
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync() >= 0);
+        }
+
+        public async Task UpdateExercise(Exercise exercise)
+        {
+            // nothing
         }
     }
 }

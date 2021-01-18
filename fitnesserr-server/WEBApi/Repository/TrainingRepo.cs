@@ -47,5 +47,10 @@ namespace WEBApi.Repository
         {
             return (await _context.SaveChangesAsync() >= 0);
         }
+
+        public async Task UpdateTraining(Training training)
+        {
+            // nothing
+        }
     }
 }

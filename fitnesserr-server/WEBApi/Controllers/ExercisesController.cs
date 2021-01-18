@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -58,16 +59,75 @@ namespace WEBApi.Controllers
 
         // PUT api/Exercises/guid
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] Exercise exercise)
+        public async Task<ActionResult> Put(Guid id, [FromBody] ExerciseUpdateDto exercise)
         {
-            // update Exercise
+            var exerciseModelFromRepo = await _repository.GetExerciseAsync(id);
+
+            if (exerciseModelFromRepo is not null)
+            {
+                _mapper.Map(exercise, exerciseModelFromRepo);
+
+                await _repository.UpdateExercise(exerciseModelFromRepo);
+
+                await _repository.SaveChangesAsync();
+
+                return Ok("Exercise has been fully updated!");
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        // PATCH api/Exercises/guid
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<ExerciseUpdateDto> exercise)
+        {
+            var exerciseModelFromRepo = await _repository.GetExerciseAsync(id);
+
+            if (exerciseModelFromRepo is not null)
+            {
+                var exerciseToPatch = _mapper.Map<ExerciseUpdateDto>(exerciseModelFromRepo);
+
+                exercise.ApplyTo(exerciseToPatch, ModelState);
+
+                if (TryValidateModel(exerciseToPatch) == false)
+                {
+                    return ValidationProblem(ModelState);
+                }
+
+                _mapper.Map(exerciseToPatch, exerciseModelFromRepo);
+
+                await _repository.UpdateExercise(exerciseModelFromRepo);
+
+                await _repository.SaveChangesAsync();
+
+                return Ok("Exercise has been updated!");
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // DELETE api/Exercises/guid
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(Guid id)
         {
-            // delete Exercise
+            var exerciseModeldFromRepo = await _repository.GetExerciseAsync(id);
+
+            if (exerciseModeldFromRepo is not null)
+            {
+                _repository.DeleteExercise(exerciseModeldFromRepo);
+
+                await _repository.SaveChangesAsync();
+
+                return NoContent();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }

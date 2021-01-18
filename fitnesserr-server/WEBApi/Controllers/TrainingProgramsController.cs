@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -58,16 +59,75 @@ namespace WEBApi.Controllers
 
         // PUT api/TrainingPrograms/guid
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] TrainingProgram value)
+        public async Task<ActionResult> Put(Guid id, [FromBody] TrainingProgramUpdateDto trainingProgram)
         {
-            // update TrainingProgram
+            var trainingProgramModelFromRepo = await _repository.GetTrainingAsync(id);
+
+            if (trainingProgramModelFromRepo is not null)
+            {
+                _mapper.Map(trainingProgram, trainingProgramModelFromRepo);
+
+                await _repository.UpdateTrainingProgram(trainingProgramModelFromRepo);
+
+                await _repository.SaveChangesAsync();
+
+                return Ok("Training Program has been fully updated!");
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        // PATCH api/TrainingPrograms/guid
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<TrainingProgramUpdateDto> trainingProgram)
+        {
+            var trainingProgramModelFromRepo = await _repository.GetTrainingAsync(id);
+
+            if (trainingProgramModelFromRepo is not null)
+            {
+                var trainingProgramToPatch = _mapper.Map<TrainingProgramUpdateDto>(trainingProgramModelFromRepo);
+
+                trainingProgram.ApplyTo(trainingProgramToPatch, ModelState);
+
+                if (TryValidateModel(trainingProgramToPatch) == false)
+                {
+                    return ValidationProblem(ModelState);
+                }
+
+                _mapper.Map(trainingProgramToPatch, trainingProgramModelFromRepo);
+
+                await _repository.UpdateTrainingProgram(trainingProgramModelFromRepo);
+
+                await _repository.SaveChangesAsync();
+
+                return Ok("Training Program has been updated!");
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // DELETE api/TrainingPrograms/guid
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(Guid id)
         {
-            // delete TrainingProgram
+            var trainingModeldFromRepo = await _repository.GetTrainingAsync(id);
+
+            if (trainingModeldFromRepo is not null)
+            {
+                _repository.DeleteTrainingProgram(trainingModeldFromRepo);
+
+                await _repository.SaveChangesAsync();
+
+                return NoContent();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }
