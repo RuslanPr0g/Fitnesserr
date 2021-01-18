@@ -14,5 +14,6 @@ namespace WEBApi.Repository
         Task<IEnumerable<User>> GetUsersAsync();
         Task<User> GetUserAsync(Guid id);
         Task RegisterUserAsync(User user);
+        Task UpdateUser(User user);
     }
 }

@@ -14,6 +14,7 @@ namespace WEBApi.Profiles
         {
             CreateMap<User, UserReadDto>();
             CreateMap<UserCreateDto, User>();
+            CreateMap<UserUpdateDto, User>();
         }
     }
 }

@@ -60,9 +60,23 @@ namespace WEBApi.Controllers
 
         // PUT api/Users/guid
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] User user)
+        public async Task<ActionResult> Put(Guid id, [FromBody] UserUpdateDto user)
         {
-            // update User
+            var userModelFromRepo = await _repository.GetUserAsync(id);
+
+            if(userModelFromRepo is not null)
+            {
+                _mapper.Map(user, userModelFromRepo);
+
+                await _repository.UpdateUser(userModelFromRepo);
+
+                await _repository.SaveChangesAsync();
+
+                return Ok("User has been updated!");
+            } else
+            {
+                return NotFound();
+            }
         }
     }
 }

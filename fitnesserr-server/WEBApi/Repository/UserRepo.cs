@@ -42,5 +42,10 @@ namespace WEBApi.Repository
         {
             return (await _context.SaveChangesAsync() >= 0);
         }
+
+        public async Task UpdateUser(User user)
+        {
+            // nothing
+        }
     }
 }
