@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -72,8 +73,39 @@ namespace WEBApi.Controllers
 
                 await _repository.SaveChangesAsync();
 
-                return Ok("User has been updated!");
+                return Ok("User has been fully updated!");
             } else
+            {
+                return NotFound();
+            }
+        }
+
+        // PATCH api/Users/guid
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<UserUpdateDto> user)
+        {
+            var userModelFromRepo = await _repository.GetUserAsync(id);
+
+            if (userModelFromRepo is not null)
+            {
+                var userToPatch = _mapper.Map<UserUpdateDto>(userModelFromRepo);
+
+                user.ApplyTo(userToPatch, ModelState);
+
+                if(TryValidateModel(userToPatch) == false)
+                {
+                    return ValidationProblem(ModelState);
+                }
+
+                _mapper.Map(userToPatch, userModelFromRepo);
+
+                await _repository.UpdateUser(userModelFromRepo);
+
+                await _repository.SaveChangesAsync();
+
+                return Ok("User has been updated!");
+            }
+            else
             {
                 return NotFound();
             }

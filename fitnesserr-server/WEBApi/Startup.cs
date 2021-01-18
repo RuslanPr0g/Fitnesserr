@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WEBApi.Context;
 using WEBApi.Repository;
+using Newtonsoft.Json.Serialization;
 
 namespace WEBApi
 {
@@ -40,6 +41,10 @@ namespace WEBApi
                         options => options.MigrationsAssembly(nameof(WEBApi))));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddControllers().AddNewtonsoftJson(s => {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
 
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<ITrainingProgramRepo, TrainingProgramRepo>();
