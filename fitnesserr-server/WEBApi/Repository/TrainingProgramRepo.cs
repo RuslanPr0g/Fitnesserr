@@ -25,6 +25,19 @@ namespace WEBApi.Repository
             await _context.TrainingPrograms.AddAsync(training);
         }
 
+        public void DeleteTrainingProgram(TrainingProgram training)
+        {
+            if (training is null)
+                throw new NullReferenceException(nameof(training));
+
+            _context.TrainingPrograms.Remove(training);
+        }
+
+        public async Task<TrainingProgram> GetTrainingAsync(Guid id)
+        {
+            return await _context.TrainingPrograms.Where(t => t.Id == id).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<TrainingProgram>> GetTrainingsAsync()
         {
             return await _context.TrainingPrograms.ToListAsync();
@@ -38,6 +51,11 @@ namespace WEBApi.Repository
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync() >= 0);
+        }
+
+        public async Task UpdateTrainingProgram(TrainingProgram training)
+        {
+            //nothing
         }
     }
 }

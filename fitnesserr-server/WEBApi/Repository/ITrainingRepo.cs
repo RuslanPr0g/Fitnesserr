@@ -13,5 +13,7 @@ namespace WEBApi.Repository
         Task<IEnumerable<Training>> GetTrainingsAsync();
         Task<Training> GetTrainingAsync(Guid id);
         Task AddTrainingAsync(Training training);
+        Task UpdateTraining(Training training);
+        void DeleteTraining(Training training);
     }
 }

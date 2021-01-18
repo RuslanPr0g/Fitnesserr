@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,12 +10,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WEBApi.Context;
 using WEBApi.Repository;
+using Newtonsoft.Json.Serialization;
 
 namespace WEBApi
 {
@@ -40,6 +41,10 @@ namespace WEBApi
                         options => options.MigrationsAssembly(nameof(WEBApi))));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddControllers().AddNewtonsoftJson(s => {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
 
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<ITrainingProgramRepo, TrainingProgramRepo>();

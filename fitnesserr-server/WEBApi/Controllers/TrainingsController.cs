@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -56,18 +57,76 @@ namespace WEBApi.Controllers
             return Ok(trainingResponseModel);
         }
 
-        // PUT api/Trainings/guid
+        // PUT api/trainings/guid
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] Training value)
+        public async Task<ActionResult> Put(Guid id, [FromBody] TrainingUpdateDto training)
         {
-            // update Training
+            var trainingModelFromRepo = await _repository.GetTrainingAsync(id);
+
+            if (trainingModelFromRepo is not null)
+            {
+                _mapper.Map(training, trainingModelFromRepo);
+
+                await _repository.UpdateTraining(trainingModelFromRepo);
+
+                await _repository.SaveChangesAsync();
+
+                return Ok("Training has been fully updated!");
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        // PATCH api/trainings/guid
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<TrainingUpdateDto> user)
+        {
+            var trainingModelFromRepo = await _repository.GetTrainingAsync(id);
+
+            if (trainingModelFromRepo is not null)
+            {
+                var trainingToPatch = _mapper.Map<TrainingUpdateDto>(trainingModelFromRepo);
+
+                user.ApplyTo(trainingToPatch, ModelState);
+
+                if (TryValidateModel(trainingToPatch) == false)
+                {
+                    return ValidationProblem(ModelState);
+                }
+
+                _mapper.Map(trainingToPatch, trainingModelFromRepo);
+
+                await _repository.UpdateTraining(trainingModelFromRepo);
+
+                await _repository.SaveChangesAsync();
+
+                return Ok("Training has been updated!");
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // DELETE api/Trainings/guid
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(Guid id)
         {
-            // delete Training
+            var trainingModelFromRepo = await _repository.GetTrainingAsync(id);
+
+            if(trainingModelFromRepo is not null)
+            {
+                _repository.DeleteTraining(trainingModelFromRepo);
+
+                await _repository.SaveChangesAsync();
+
+                return NoContent();
+            } else
+            {
+                return NotFound();
+            }
         }
     }
 }

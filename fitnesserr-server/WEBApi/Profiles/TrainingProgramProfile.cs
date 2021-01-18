@@ -14,6 +14,8 @@ namespace WEBApi.Profiles
         {
             CreateMap<TrainingProgram, TrainingProgramReadDto>();
             CreateMap<TrainingProgramCreateDto, TrainingProgram>();
+            CreateMap<TrainingProgramUpdateDto, TrainingProgram>();
+            CreateMap<TrainingProgram, TrainingProgramUpdateDto>();
         }
     }
 }

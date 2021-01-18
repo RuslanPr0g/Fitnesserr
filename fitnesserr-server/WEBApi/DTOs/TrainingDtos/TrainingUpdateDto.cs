@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace WEBApi.DTOs
 {
-    public class TrainingCreateDto
+    public class TrainingUpdateDto
     {
-        [Required]
-        public Guid UserId { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
@@ -17,8 +15,10 @@ namespace WEBApi.DTOs
         [Required]
         public string Type { get; set; }
         [Required]
+        public int TimeToComplete { get; set; }
+        [Required]
         public bool IsPublic { get; set; } = true;
         [Required]
-        public DateTime DatePublished { get; set; } = DateTime.Now;
+        public int Likes { get; set; } = 0;
     }
 }

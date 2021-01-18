@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace WEBApi.DTOs
 {
-    public class TrainingCreateDto
+    public class ExerciseUpdateDto
     {
         [Required]
-        public Guid UserId { get; set; }
+        public int Order { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }
         [Required]
-        public string Type { get; set; }
+        public int TimeToComplete { get; set; }
         [Required]
-        public bool IsPublic { get; set; } = true;
+        public int Times { get; set; }
         [Required]
-        public DateTime DatePublished { get; set; } = DateTime.Now;
+        public string ImageURL { get; set; }
     }
 }

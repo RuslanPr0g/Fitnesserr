@@ -56,19 +56,5 @@ namespace WEBApi.Controllers
 
             return Ok(trainingDoneResponseModel);
         }
-
-        // PUT api/exercises/guid
-        [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] TrainingDone value)
-        {
-            // update TrainingDone
-        }
-
-        // DELETE api/TrainingDone/guid
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            // delete TrainingDone
-        }
     }
 }

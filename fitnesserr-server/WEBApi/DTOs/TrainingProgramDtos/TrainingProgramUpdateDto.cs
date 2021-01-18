@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace WEBApi.DTOs
 {
-    public class TrainingProgramCreateDto
+    public class TrainingProgramUpdateDto
     {
-        [Required]
-        public Guid TrainingId { get; set; }
-        [Required]
-        public Guid UserId { get; set; }
-        [Required]
-        public DateTime DateAdded { get; set; } = DateTime.Now;
         [Required]
         public bool IsPublic { get; set; } = false;
     }

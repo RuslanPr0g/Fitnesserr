@@ -10,8 +10,11 @@ namespace WEBApi.Repository
     {
         Task<bool> SaveChangesAsync();
 
+        Task<TrainingDone> GetUniqueTrainingDoneAsync(Guid id);
         Task<IEnumerable<TrainingDone>> GetTrainingDoneAsync();
         Task<IEnumerable<TrainingDone>> GetTrainingDoneAsync(Guid id);
         Task FinishTrainingAsync(TrainingDone training);
+        Task UpdateTrainingDone(TrainingDone training);
+        void DeleteTrainingDone(TrainingDone training);
     }
 }
