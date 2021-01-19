@@ -37,7 +37,7 @@ namespace WEBApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TrainingReadDto>> Get(Guid id)
         {
-            var trainingPrograms = await _repository.GetTrainingsAsync();
+            var trainingPrograms = await _repository.GetTrainingAsync(id);
 
             return Ok(_mapper.Map<TrainingReadDto>(trainingPrograms));
         }
