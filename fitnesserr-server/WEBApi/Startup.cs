@@ -15,7 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WEBApi.Repository;
 using Newtonsoft.Json.Serialization;
-using WEBApi.Context;
+using Core.EF;
 
 namespace WEBApi
 {

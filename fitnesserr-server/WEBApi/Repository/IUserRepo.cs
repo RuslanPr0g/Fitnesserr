@@ -2,8 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WEBApi.DTOs;
-using WEBApi.Models;
+using Core.Entities;
 
 namespace WEBApi.Repository
 {
