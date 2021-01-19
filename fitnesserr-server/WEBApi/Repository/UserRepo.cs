@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WEBApi.DTOs;
 
 namespace WEBApi.Repository
 {
@@ -30,10 +31,27 @@ namespace WEBApi.Repository
                 .ToListAsync();
         }
 
+        public async Task<User> LoginUserAsync(UserLoginDto user)
+        {
+            var userFromContext = await _context.Users.FirstOrDefaultAsync(u => u.UserName == user.UserName);
+
+            if (userFromContext is not null)
+            {
+                BCrypt.Net.BCrypt.Verify(user.Password, userFromContext.Password);
+                return userFromContext;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public async Task RegisterUserAsync(User user)
         {
             if (user is null)
                 throw new ArgumentNullException(nameof(user));
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
             await _context.Users.AddAsync(user);
         }

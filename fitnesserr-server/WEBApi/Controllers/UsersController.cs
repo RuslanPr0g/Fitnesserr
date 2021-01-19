@@ -42,6 +42,18 @@ namespace WEBApi.Controllers
             return user is null ? NotFound() : Ok(_mapper.Map<UserReadDto>(user));
         }
 
+        // POST api/Users/login
+        [HttpPost("/login")]
+        public async Task<ActionResult<UserCreateDto>> Login([FromBody] UserLoginDto user)
+        {
+            var userFromRepo = await _repository.LoginUserAsync(user);
+
+            if (userFromRepo is not null)
+                return Ok(userFromRepo);
+            else
+                return NotFound(user);
+        }
+
         // POST api/Users
         [HttpPost]
         public async Task<ActionResult<UserReadDto>> Post([FromBody] UserCreateDto user)
@@ -50,9 +62,7 @@ namespace WEBApi.Controllers
 
             var userModel = _mapper.Map<User>(user);
 
-            userModel.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-
-            //await _repository.RegisterUserAsync(userModel);
+            await _repository.RegisterUserAsync(userModel);
 
             //await _repository.SaveChangesAsync();
 
@@ -67,7 +77,7 @@ namespace WEBApi.Controllers
         {
             var userModelFromRepo = await _repository.GetUserAsync(id);
 
-            if(userModelFromRepo is not null)
+            if (userModelFromRepo is not null)
             {
                 _mapper.Map(user, userModelFromRepo);
 
@@ -76,7 +86,8 @@ namespace WEBApi.Controllers
                 await _repository.SaveChangesAsync();
 
                 return Ok("User has been fully updated!");
-            } else
+            }
+            else
             {
                 return NotFound();
             }
@@ -94,7 +105,7 @@ namespace WEBApi.Controllers
 
                 user.ApplyTo(userToPatch, ModelState);
 
-                if(TryValidateModel(userToPatch) == false)
+                if (TryValidateModel(userToPatch) == false)
                 {
                     return ValidationProblem(ModelState);
                 }
