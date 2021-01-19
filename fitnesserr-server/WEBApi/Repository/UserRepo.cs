@@ -35,9 +35,8 @@ namespace WEBApi.Repository
         {
             var userFromContext = await _context.Users.FirstOrDefaultAsync(u => u.UserName == user.UserName);
 
-            if (userFromContext is not null)
+            if (userFromContext is not null && BCrypt.Net.BCrypt.Verify(user.Password, userFromContext.Password))
             {
-                BCrypt.Net.BCrypt.Verify(user.Password, userFromContext.Password);
                 return userFromContext;
             }
             else

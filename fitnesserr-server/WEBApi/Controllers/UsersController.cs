@@ -64,7 +64,7 @@ namespace WEBApi.Controllers
 
             await _repository.RegisterUserAsync(userModel);
 
-            //await _repository.SaveChangesAsync();
+            await _repository.SaveChangesAsync();
 
             var userResponseModel = _mapper.Map<UserReadDto>(userModel);
 
