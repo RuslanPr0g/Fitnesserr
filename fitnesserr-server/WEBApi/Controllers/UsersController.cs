@@ -50,9 +50,11 @@ namespace WEBApi.Controllers
 
             var userModel = _mapper.Map<User>(user);
 
-            await _repository.RegisterUserAsync(userModel);
+            userModel.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
-            await _repository.SaveChangesAsync();
+            //await _repository.RegisterUserAsync(userModel);
+
+            //await _repository.SaveChangesAsync();
 
             var userResponseModel = _mapper.Map<UserReadDto>(userModel);
 
