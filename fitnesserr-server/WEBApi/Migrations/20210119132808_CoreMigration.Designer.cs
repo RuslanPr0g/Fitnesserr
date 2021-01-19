@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WEBApi.Migrations
 {
     [DbContext(typeof(TrainingContext))]
-    [Migration("20210117135644_DateTimeNowMigration")]
-    partial class DateTimeNowMigration
+    [Migration("20210119132808_CoreMigration")]
+    partial class CoreMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace WEBApi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.2");
 
-            modelBuilder.Entity("WEBApi.Models.Exercise", b =>
+            modelBuilder.Entity("Core.Entities.Exercise", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace WEBApi.Migrations
                     b.ToTable("Exercises");
                 });
 
-            modelBuilder.Entity("WEBApi.Models.Training", b =>
+            modelBuilder.Entity("Core.Entities.Training", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -89,7 +89,7 @@ namespace WEBApi.Migrations
                     b.ToTable("Trainings");
                 });
 
-            modelBuilder.Entity("WEBApi.Models.TrainingDone", b =>
+            modelBuilder.Entity("Core.Entities.TrainingDone", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,7 +114,7 @@ namespace WEBApi.Migrations
                     b.ToTable("TrainingDone");
                 });
 
-            modelBuilder.Entity("WEBApi.Models.TrainingProgram", b =>
+            modelBuilder.Entity("Core.Entities.TrainingProgram", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -139,7 +139,7 @@ namespace WEBApi.Migrations
                     b.ToTable("TrainingPrograms");
                 });
 
-            modelBuilder.Entity("WEBApi.Models.User", b =>
+            modelBuilder.Entity("Core.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -174,39 +174,39 @@ namespace WEBApi.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("WEBApi.Models.Exercise", b =>
+            modelBuilder.Entity("Core.Entities.Exercise", b =>
                 {
-                    b.HasOne("WEBApi.Models.Training", null)
+                    b.HasOne("Core.Entities.Training", null)
                         .WithMany("Exercises")
                         .HasForeignKey("TrainingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WEBApi.Models.TrainingDone", b =>
+            modelBuilder.Entity("Core.Entities.TrainingDone", b =>
                 {
-                    b.HasOne("WEBApi.Models.User", null)
+                    b.HasOne("Core.Entities.User", null)
                         .WithMany("TrainingDones")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WEBApi.Models.TrainingProgram", b =>
+            modelBuilder.Entity("Core.Entities.TrainingProgram", b =>
                 {
-                    b.HasOne("WEBApi.Models.User", null)
+                    b.HasOne("Core.Entities.User", null)
                         .WithMany("TrainingPrograms")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WEBApi.Models.Training", b =>
+            modelBuilder.Entity("Core.Entities.Training", b =>
                 {
                     b.Navigation("Exercises");
                 });
 
-            modelBuilder.Entity("WEBApi.Models.User", b =>
+            modelBuilder.Entity("Core.Entities.User", b =>
                 {
                     b.Navigation("TrainingDones");
 

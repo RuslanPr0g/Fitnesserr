@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-namespace WEBApi.Models
+namespace Core.Entities
 {
     public class TrainingDone
     {

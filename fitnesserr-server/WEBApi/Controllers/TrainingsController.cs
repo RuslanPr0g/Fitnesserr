@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WEBApi.DTOs;
-using WEBApi.Models;
+using Core.Entities;
 using WEBApi.Repository;
 
 namespace WEBApi.Controllers
@@ -37,7 +37,7 @@ namespace WEBApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TrainingReadDto>> Get(Guid id)
         {
-            var trainingPrograms = await _repository.GetTrainingsAsync();
+            var trainingPrograms = await _repository.GetTrainingAsync(id);
 
             return Ok(_mapper.Map<TrainingReadDto>(trainingPrograms));
         }

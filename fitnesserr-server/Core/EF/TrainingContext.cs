@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WEBApi.Models;
 
-namespace WEBApi.Context
+namespace Core.EF
 {
     public class TrainingContext : DbContext
     {
