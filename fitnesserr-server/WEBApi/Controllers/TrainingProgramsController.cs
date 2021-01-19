@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WEBApi.DTOs;
-using WEBApi.Models;
+using Core.Entities;
 using WEBApi.Repository;
 
 namespace WEBApi.Controllers

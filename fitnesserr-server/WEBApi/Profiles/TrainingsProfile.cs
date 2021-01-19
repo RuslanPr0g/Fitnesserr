@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WEBApi.DTOs;
-using WEBApi.Models;
+using Core.EF;
+using Core.Entities;
 using AutoMapper;
+using WEBApi.DTOs;
 
 namespace WEBApi.Profiles
 {
