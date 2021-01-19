@@ -31,9 +31,12 @@ namespace WEBApi.Repository
                 .ToListAsync();
         }
 
-        public async Task<User> LoginUserAsync(UserLoginDto user)
+        public async Task<User> LoginUserAsync(Guid id, UserLoginDto user)
         {
-            var userFromContext = await _context.Users.FirstOrDefaultAsync(u => u.UserName == user.UserName);
+            var userFromContext = await _context.Users
+                .Include(t => t.TrainingDones)
+                .Include(t => t.TrainingPrograms)
+                .FirstOrDefaultAsync(u => u.Id == id);
 
             if (userFromContext is not null && BCrypt.Net.BCrypt.Verify(user.Password, userFromContext.Password))
             {

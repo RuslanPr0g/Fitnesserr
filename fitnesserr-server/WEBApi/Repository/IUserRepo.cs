@@ -13,7 +13,7 @@ namespace WEBApi.Repository
 
         Task<IEnumerable<User>> GetUsersAsync();
         Task<User> GetUserAsync(Guid id);
-        Task<User> LoginUserAsync(UserLoginDto user);
+        Task<User> LoginUserAsync(Guid id, UserLoginDto user);
         Task RegisterUserAsync(User user);
         Task UpdateUser(User user);
     }
