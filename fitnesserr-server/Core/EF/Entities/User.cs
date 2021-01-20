@@ -17,6 +17,7 @@ namespace Core.Entities
         public string LastName { get; set; }
         [Required]
         [Column(TypeName = "varchar(100)")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string UserName { get; set; }
         [Required]
         [Column(TypeName = "varchar(500)")]
