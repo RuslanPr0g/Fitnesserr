@@ -58,8 +58,6 @@ namespace WEBApi.Controllers
         [HttpPost]
         public async Task<ActionResult<UserReadDto>> Post([FromBody] UserCreateDto user)
         {
-            // TODO: validate the user, token, etc..
-
             var userModel = _mapper.Map<User>(user);
 
             await _repository.RegisterUserAsync(userModel);
