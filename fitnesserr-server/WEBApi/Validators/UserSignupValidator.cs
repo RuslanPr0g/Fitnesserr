@@ -7,7 +7,7 @@ namespace WEBApi.Validators
     {
         public UserSignupValidator()
         {
-            RuleFor(u => u.UserName).NotEmpty().WithMessage("Email cannot be empty.");
+            RuleFor(u => u.UserName).MinimumLength(10).WithMessage("Email too short. (here i)");
         }
     }
 }
