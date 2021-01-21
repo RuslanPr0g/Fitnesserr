@@ -7,7 +7,7 @@ namespace WEBApi.Validators
     {
         public UserSignupValidator()
         {
-            RuleFor(u => u.UserName).MinimumLength(10).WithMessage("Email too short. (here i)");
+            RuleFor(u => u.UserName).MinimumLength(7).WithMessage("Username is too short.");
         }
     }
 }

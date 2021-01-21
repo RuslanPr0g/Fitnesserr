@@ -17,6 +17,7 @@ using WEBApi.Repository;
 using Newtonsoft.Json.Serialization;
 using Core.EF;
 using WEBApi.Extensions;
+using FluentValidation.AspNetCore;
 
 namespace WEBApi
 {
@@ -48,7 +49,7 @@ namespace WEBApi
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
-            //services.AddValidators();
+            services.AddValidators();
 
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<ITrainingProgramRepo, TrainingProgramRepo>();
