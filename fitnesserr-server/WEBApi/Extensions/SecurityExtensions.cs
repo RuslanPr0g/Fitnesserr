@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.AspNetCore.Builder;
 using FluentValidation;
 using WEBApi.PipelineBehaviors;
+using FluentValidation.AspNetCore;
 
 namespace WEBApi.Extensions
 {
@@ -44,8 +45,9 @@ namespace WEBApi.Extensions
 
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
-            services.AddValidatorsFromAssembly(typeof(Startup).Assembly);
-            services.AddTransient(typeof(ValidationBahavior<,>));
+            //services.AddValidatorsFromAssembly(typeof(Startup).Assembly);
+            services.AddMvc().AddFluentValidation(conf => conf.RegisterValidatorsFromAssemblyContaining<Startup>());
+            //services.AddTransient(typeof(ValidationBahavior<,>));
             return services;
         }
     }
