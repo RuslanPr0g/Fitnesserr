@@ -16,7 +16,8 @@ using System.Threading.Tasks;
 using WEBApi.Repository;
 using Newtonsoft.Json.Serialization;
 using Core.EF;
-   
+using WEBApi.Extensions;
+
 namespace WEBApi
 {
     public class Startup
@@ -35,22 +36,29 @@ namespace WEBApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WEBApi", Version = "v1" });
             });
-            
+
             services.AddDbContext<TrainingContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("StandardSQLServer"),
                         options => options.MigrationsAssembly(nameof(WEBApi))));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddControllers().AddNewtonsoftJson(s => {
+            services.AddControllers().AddNewtonsoftJson(s =>
+            {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
+
+            //services.AddValidators();
 
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<ITrainingProgramRepo, TrainingProgramRepo>();
             services.AddScoped<ITrainingDoneRepo, TrainingDoneRepo>();
             services.AddScoped<ITrainingRepo, TrainingRepo>();
             services.AddScoped<IExerciseRepo, ExerciseRepo>();
+
+            //services.AddJWTokens(Configuration);
+
+            services.AddCors();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -65,6 +73,11 @@ namespace WEBApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(builder => builder
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader());
 
             app.UseAuthorization();
 
