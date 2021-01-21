@@ -23,6 +23,7 @@ namespace Core.Entities
         [Column(TypeName = "varchar(500)")]
         public string Password { get; set; }
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(TypeName = "varchar(400)")]
         public string Email { get; set; }
         public int Score { get; set; }

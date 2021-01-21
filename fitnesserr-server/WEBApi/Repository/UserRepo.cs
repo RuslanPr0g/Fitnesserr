@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using WEBApi.DTOs;
 
@@ -16,6 +17,11 @@ namespace WEBApi.Repository
         public UserRepo(TrainingContext context)
         {
             this._context = context;
+        }
+
+        public async Task<User> FindUserByEmailAsync(string email, CancellationToken cancellation)
+        {
+            return await _context.Users.Where(u => u.Email == email).FirstOrDefaultAsync(cancellationToken: cancellation);
         }
 
         public async Task<User> GetUserAsync(Guid id)

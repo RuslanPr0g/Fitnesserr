@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Entities;
 using WEBApi.DTOs;
+using System.Threading;
 
 namespace WEBApi.Repository
 {
@@ -16,5 +17,6 @@ namespace WEBApi.Repository
         Task<User> LoginUserAsync(Guid id, UserLoginDto user);
         Task RegisterUserAsync(User user);
         Task UpdateUser(User user);
+        Task<User> FindUserByEmailAsync(string email, CancellationToken cancellation);
     }
 }

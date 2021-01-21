@@ -49,6 +49,8 @@ namespace WEBApi
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
+            services.AddEncryption();
+
             services.AddValidators();
 
             services.AddScoped<IUserRepo, UserRepo>();
@@ -57,7 +59,7 @@ namespace WEBApi
             services.AddScoped<ITrainingRepo, TrainingRepo>();
             services.AddScoped<IExerciseRepo, ExerciseRepo>();
 
-            //services.AddJWTokens(Configuration);
+            services.AddJWTokens(Configuration);
 
             services.AddCors();
         }
@@ -80,6 +82,7 @@ namespace WEBApi
                .AllowAnyMethod()
                .AllowAnyHeader());
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
