@@ -40,14 +40,14 @@ namespace WEBApi.Repository
                 .ToListAsync();
         }
 
-        public async Task<string> LoginUserAsync(Guid id, UserLoginDto user)
+        public async Task<string> LoginUserAsync(UserLoginDto user)
         {
-            var userFromContext = await _context.Users
+            //var userFromContext = await _context.Users
                 //.Include(t => t.TrainingDones)
                 //.Include(t => t.TrainingPrograms)
-                .FirstOrDefaultAsync(u => u.Id == id);
+                //.FirstOrDefaultAsync(u => u.Id == id);
 
-            var token = await _manager.Authorize(userFromContext.Email, user.Password);
+            var token = await _manager.Authorize(user.Email, user.Password);
 
             return token;
         }

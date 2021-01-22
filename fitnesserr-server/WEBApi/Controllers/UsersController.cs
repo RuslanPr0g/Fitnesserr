@@ -42,11 +42,11 @@ namespace WEBApi.Controllers
             return user is null ? NotFound() : Ok(_mapper.Map<UserReadDto>(user));
         }
 
-        // POST api/Users/login/guid
-        [HttpPost("/login/{id}")]
-        public async Task<ActionResult<UserReadDto>> Login(Guid id, [FromBody] UserLoginDto user)
+        // POST api/Users/login
+        [HttpPost("/login")]
+        public async Task<ActionResult<UserReadDto>> Login([FromBody] UserLoginDto user)
         {
-            var userFromRepo = await _repository.LoginUserAsync(id, user);
+            var userFromRepo = await _repository.LoginUserAsync(user);
 
             if (userFromRepo is not null)
                 return Ok(_mapper.Map<UserReadDto>(userFromRepo));
