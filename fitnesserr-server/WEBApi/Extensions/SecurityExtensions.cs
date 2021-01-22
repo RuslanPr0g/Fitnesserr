@@ -9,7 +9,6 @@ using FluentValidation;
 using WEBApi.PipelineBehaviors;
 using FluentValidation.AspNetCore;
 using WEBApi.Authentication;
-using DataAccessLibrary.Encryption;
 
 namespace WEBApi.Extensions
 {
@@ -18,7 +17,6 @@ namespace WEBApi.Extensions
         public static IServiceCollection AddEncryption(this IServiceCollection services)
         {
             services.AddSingleton<HashAlgorithm>(MD5.Create());
-            services.AddSingleton<IEncrypter, Encrypter>();
             return services;
         }
 

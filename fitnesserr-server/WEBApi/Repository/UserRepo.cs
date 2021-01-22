@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using WEBApi.Authentication;
 using WEBApi.DTOs;
 
 namespace WEBApi.Repository
@@ -13,10 +14,12 @@ namespace WEBApi.Repository
     public class UserRepo : IUserRepo
     {
         private readonly TrainingContext _context;
+        private readonly IJWTokenManager _manager;
 
-        public UserRepo(TrainingContext context)
+        public UserRepo(TrainingContext context, IJWTokenManager manager)
         {
             this._context = context;
+            this._manager = manager;
         }
 
         public async Task<User> FindUserByEmailAsync(string email, CancellationToken cancellation)
@@ -37,24 +40,19 @@ namespace WEBApi.Repository
                 .ToListAsync();
         }
 
-        public async Task<User> LoginUserAsync(Guid id, UserLoginDto user)
+        public async Task<string> LoginUserAsync(Guid id, UserLoginDto user)
         {
             var userFromContext = await _context.Users
-                .Include(t => t.TrainingDones)
-                .Include(t => t.TrainingPrograms)
+                //.Include(t => t.TrainingDones)
+                //.Include(t => t.TrainingPrograms)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
-            if (userFromContext is not null && BCrypt.Net.BCrypt.Verify(user.Password, userFromContext.Password))
-            {
-                return userFromContext;
-            }
-            else
-            {
-                return null;
-            }
+            var token = await _manager.Authorize(userFromContext.Email, user.Password);
+
+            return token;
         }
 
-        public async Task RegisterUserAsync(User user)
+        public async Task<string> RegisterUserAsync(User user)
         {
             if (user is null)
                 throw new ArgumentNullException(nameof(user));
@@ -62,6 +60,10 @@ namespace WEBApi.Repository
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
             await _context.Users.AddAsync(user);
+
+            var token = await _manager.Authorize(user.Email, user.Password);
+
+            return token;
         }
 
         public async Task<bool> SaveChangesAsync()
