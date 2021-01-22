@@ -48,7 +48,7 @@ namespace WEBApi
             {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
-
+            
             services.AddEncryption();
 
             services.AddValidators();
