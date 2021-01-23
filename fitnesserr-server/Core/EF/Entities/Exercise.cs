@@ -21,6 +21,7 @@ namespace Core.Entities
         public string Description { get; set; }
         [Required]
         public int TimeToComplete { get; set; }
+        public int ScoreToIncrease { get; set; } = 5;
         public int Times { get; set; }
         public string ImageURL { get; set; }
     }
