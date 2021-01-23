@@ -10,7 +10,7 @@ namespace WEBApi.Extensions
         public static IServiceCollection AddDapperDatabase(this IServiceCollection services)
         {
             //services.AddSingleton<ISQLDataAccess, SQLDataAccess>();
-            services.AddSingleton<IUserRepo, UserRepo>();
+            //services.AddSingleton<IUserRepo, UserRepo>();
 
             //SqlMapper.AddTypeHandler(new PostgreGuidTypeHandler());
             //SqlMapper.RemoveTypeMap(typeof(Guid));
