@@ -44,6 +44,8 @@ namespace WEBApi
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            services.AddDapperDatabase();
+
             services.AddJWTokens(Configuration);
 
             services.AddControllers().AddNewtonsoftJson(s =>
