@@ -15,10 +15,7 @@ namespace WEBApi.DTOs
         [Required]
         public string Type { get; set; }
         [Required]
-        public int TimeToComplete { get; set; }
-        [Required]
         public bool IsPublic { get; set; } = true;
-        [Required]
         public int Likes { get; set; } = 0;
     }
 }
