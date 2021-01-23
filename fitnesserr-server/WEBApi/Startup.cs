@@ -44,6 +44,8 @@ namespace WEBApi
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            services.AddJWTokens(Configuration);
+
             services.AddControllers().AddNewtonsoftJson(s =>
             {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -58,8 +60,6 @@ namespace WEBApi
             services.AddScoped<ITrainingDoneRepo, TrainingDoneRepo>();
             services.AddScoped<ITrainingRepo, TrainingRepo>();
             services.AddScoped<IExerciseRepo, ExerciseRepo>();
-
-            services.AddJWTokens(Configuration);
 
             services.AddCors();
         }
