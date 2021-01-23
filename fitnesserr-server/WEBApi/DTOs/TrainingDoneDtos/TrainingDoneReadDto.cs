@@ -7,7 +7,6 @@ namespace WEBApi.DTOs
 {
     public class TrainingDoneReadDto
     {
-        public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public Guid TrainingId { get; set; }
         public DateTime DateDone { get; set; }
