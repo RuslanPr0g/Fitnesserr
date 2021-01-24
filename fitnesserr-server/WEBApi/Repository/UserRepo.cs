@@ -29,7 +29,10 @@ namespace WEBApi.Repository
 
         public async Task<User> GetUserAsync(Guid id)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return await _context.Users
+                .Include(t => t.TrainingDones)
+                .Include(t => t.TrainingPrograms)
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<IEnumerable<User>> GetUsersAsync()
@@ -42,11 +45,6 @@ namespace WEBApi.Repository
 
         public async Task<string> LoginUserAsync(UserLoginDto user)
         {
-            //var userFromContext = await _context.Users
-                //.Include(t => t.TrainingDones)
-                //.Include(t => t.TrainingPrograms)
-                //.FirstOrDefaultAsync(u => u.Id == id);
-
             var token = await _manager.Authorize(user.Email, user.Password);
 
             return token;

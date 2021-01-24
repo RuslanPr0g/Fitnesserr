@@ -2,22 +2,15 @@ using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WEBApi.Repository;
 using Newtonsoft.Json.Serialization;
 using Core.EF;
 using WEBApi.Extensions;
-using FluentValidation.AspNetCore;
 
 namespace WEBApi
 {
@@ -48,16 +41,18 @@ namespace WEBApi
             {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
-            
-            services.AddEncryption();
 
-            services.AddValidators();
+            services.AddEncryption();
 
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<ITrainingProgramRepo, TrainingProgramRepo>();
             services.AddScoped<ITrainingDoneRepo, TrainingDoneRepo>();
             services.AddScoped<ITrainingRepo, TrainingRepo>();
             services.AddScoped<IExerciseRepo, ExerciseRepo>();
+
+            services.AddDapperDatabase();
+
+            services.AddValidators();
 
             services.AddJWTokens(Configuration);
 

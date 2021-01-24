@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using WEBApi.DTOs;
 using Core.Entities;
 using WEBApi.Repository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WEBApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -42,6 +44,7 @@ namespace WEBApi.Controllers
             return user is null ? NotFound() : Ok(_mapper.Map<UserReadDto>(user));
         }
 
+        [AllowAnonymous]
         // POST api/Users/login
         [HttpPost("/login")]
         public async Task<ActionResult<UserReadDto>> Login([FromBody] UserLoginDto user)
@@ -54,6 +57,7 @@ namespace WEBApi.Controllers
                 return NotFound(user);
         }
 
+        [AllowAnonymous]
         // POST api/Users
         [HttpPost]
         public async Task<ActionResult<UserReadDto>> Post([FromBody] UserCreateDto user)

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WEBApi.DTOs;
 using Core.Entities;
 using WEBApi.Repository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WEBApi.Controllers
 {
