@@ -20,6 +20,6 @@ WORKDIR /src
 ENV ASPNETCORE_ENVIROMENT=Production
 EXPOSE 5001
 EXPOSE 5000
-ENV ASPNETCORE_URLS=http://+:5001;https://+:5000   
+# ENV ASPNETCORE_URLS=http://+:5001;https://+:5000   
 COPY --from=build-env /src/out .
 ENTRYPOINT ["dotnet", "WEBApi.dll"]
