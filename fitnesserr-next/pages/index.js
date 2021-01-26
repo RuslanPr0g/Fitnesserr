@@ -13,11 +13,11 @@ export default function Home() {
       <section className={utilStyles.headingMd}>
         <p>
           Check out{" "}
-          <Link href="/exercise">
+          <Link href="/trainings/exercises">
             <a>exercises</a>
           </Link>{" "}
           or{" "}
-          <Link>
+          <Link href="/users/signup">
             <a>sign up</a>
           </Link>{" "}
           for free to get started your routine!

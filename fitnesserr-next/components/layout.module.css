@@ -2,6 +2,7 @@
   max-width: 80%;
   padding: 0 1rem;
   margin: 3rem auto 6rem;
+  text-align: center;
 }
 
 .header {
@@ -11,13 +12,12 @@
 }
 
 .headerImage {
-  width: 6rem;
-  height: 6rem;
+  width: 100%;
 }
 
 .headerHomeImage {
-  width: 8rem;
-  height: 8rem;
+  font-size: 3em;
+  font-weight: 800;
 }
 
 .backToHome {

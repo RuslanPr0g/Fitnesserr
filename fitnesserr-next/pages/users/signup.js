@@ -7,11 +7,6 @@ export default function Exercises() {
       <h1>Hello!</h1>
       <br />
       <strong>Sign Up here.</strong>
-      <h2>
-        <Link href="/">
-          <a>Back to home</a>
-        </Link>
-      </h2>
     </Layout>
   );
 }
