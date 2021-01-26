@@ -1,0 +1,25 @@
+.container {
+  max-width: 80%;
+  padding: 0 1rem;
+  margin: 3rem auto 6rem;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.headerImage {
+  width: 100%;
+}
+
+.headerHomeImage {
+  font-size: 3em;
+  font-weight: 800;
+}
+
+.backToHome {
+  margin: 3rem 0 0;
+}
