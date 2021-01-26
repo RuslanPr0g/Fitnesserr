@@ -13,7 +13,7 @@ body {
 }
 
 *::selection {
-  background: rgb(7, 76, 180);
+  background: rgb(9, 76, 180);
   color: #fff;
 }
 
