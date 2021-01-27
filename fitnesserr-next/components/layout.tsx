@@ -6,7 +6,12 @@ import Link from "next/link";
 const name = "Fitnesserr, to make life more fitnesser.";
 export const siteTitle = "Fitnesserr";
 
-export default function Layout({ children, home }) {
+export interface LayoutProps {
+  children: React.ReactNode | undefined,
+  home: string | undefined,
+}
+
+export default function Layout({ children, home } : LayoutProps) {
   return (
     <div className={styles.container}>
       <Head>
