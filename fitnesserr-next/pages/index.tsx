@@ -5,7 +5,7 @@ import utilStyles from "../styles/utils.module.css";
 
 export default function Home() {
   return (
-    <Layout home>
+    <Layout home="/">
       <Head>
         <title>{siteTitle}</title>
         <link rel="icon" href="/favicon.ico" />
