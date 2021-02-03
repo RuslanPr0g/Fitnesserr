@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WEBApi.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TrainingsController : ControllerBase

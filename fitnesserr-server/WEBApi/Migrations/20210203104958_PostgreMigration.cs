@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WEBApi.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class PostgreMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,15 +11,14 @@ namespace WEBApi.Migrations
                 name: "Trainings",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "varchar(100)", nullable: false),
                     Description = table.Column<string>(type: "varchar(500)", nullable: true),
                     Type = table.Column<string>(type: "varchar(100)", nullable: true),
-                    TimeToComplete = table.Column<int>(type: "int", nullable: false),
-                    IsPublic = table.Column<bool>(type: "bit", nullable: false),
-                    Likes = table.Column<int>(type: "int", nullable: false),
-                    DatePublished = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    IsPublic = table.Column<bool>(type: "boolean", nullable: false),
+                    Likes = table.Column<int>(type: "integer", nullable: false),
+                    DatePublished = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,14 +29,14 @@ namespace WEBApi.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "varchar(100)", nullable: true),
                     LastName = table.Column<string>(type: "varchar(100)", nullable: true),
                     UserName = table.Column<string>(type: "varchar(100)", nullable: false),
                     Password = table.Column<string>(type: "varchar(500)", nullable: false),
                     Email = table.Column<string>(type: "varchar(400)", nullable: false),
-                    Score = table.Column<int>(type: "int", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Score = table.Column<int>(type: "integer", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,12 +47,15 @@ namespace WEBApi.Migrations
                 name: "Exercises",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TrainingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Order = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    TrainingId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Order = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "varchar(100)", nullable: false),
                     Description = table.Column<string>(type: "varchar(500)", nullable: true),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    TimeToComplete = table.Column<int>(type: "integer", nullable: false),
+                    ScoreToIncrease = table.Column<int>(type: "integer", nullable: false),
+                    Times = table.Column<int>(type: "integer", nullable: false),
+                    ImageURL = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -70,11 +72,11 @@ namespace WEBApi.Migrations
                 name: "TrainingDone",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TrainingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateDone = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TimeDone = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TrainingId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DateDone = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    TimeDone = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,11 +93,11 @@ namespace WEBApi.Migrations
                 name: "TrainingPrograms",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TrainingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsPublic = table.Column<bool>(type: "bit", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    TrainingId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    IsPublic = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
