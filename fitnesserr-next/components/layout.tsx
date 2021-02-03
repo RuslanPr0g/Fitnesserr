@@ -2,11 +2,12 @@ import Head from "next/head";
 import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
+import { LayoutProps } from "./LayoutProps";
 
 const name = "Fitnesserr, to make life more fitnesser.";
 export const siteTitle = "Fitnesserr";
 
-export default function Layout({ children, home }) {
+export default function Layout({ children, home } : LayoutProps) {
   return (
     <div className={styles.container}>
       <Head>

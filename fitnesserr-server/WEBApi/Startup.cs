@@ -32,8 +32,8 @@ namespace WEBApi
             });
 
             services.AddDbContext<TrainingContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("StandardSQLServer"),
-                        options => options.MigrationsAssembly(nameof(WEBApi))));
+                opt.UseNpgsql(Configuration.GetConnectionString("StandardPostgres"),
+                  options => options.MigrationsAssembly(nameof(WEBApi))));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
