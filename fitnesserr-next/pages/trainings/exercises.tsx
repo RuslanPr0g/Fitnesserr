@@ -2,7 +2,10 @@ import Link from "next/link";
 import Head from "next/head";
 import Layout from "../../components/layout";
 
-export default function Exercises() {
+export default function Exercises(props: object) {
+  let exercisesList = () => 
+    props.exercises.map((exercise: object, index: number) => <li key={index}>{exercise.name}</li> );
+
   return (
     <Layout home="/">
       <Head>
@@ -11,24 +14,26 @@ export default function Exercises() {
       </Head>
 
       <ul>
-        <li>First</li>
-        <li>Second</li>
-        <li>Third</li>
-        <li>Fourth</li>
+        { exercisesList() }
       </ul>
     </Layout>
   );
 }
 
-export default function Home(props) { ... }
-
 export async function getStaticProps() {
-  // Get external data from the file system, API, DB, etc.
-  const data = ...
+  const https = require("https");
+  const url = 'https://localhost:44334/api/exercises';
+  const agent = new https.Agent({
+    rejectUnauthorized: false
+  })
 
-  // The value of the `props` key will be
-  //  passed to the `Home` component
+  const res = await fetch(url, { agent })
+
+  const exercises = await res.json()
+
   return {
-    props: ...
+    props: {
+      exercises: exercises,
+    },
   }
 }
