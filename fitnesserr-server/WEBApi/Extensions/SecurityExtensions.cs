@@ -50,9 +50,7 @@ namespace WEBApi.Extensions
 
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
-            //services.AddValidatorsFromAssembly(typeof(Startup).Assembly);
             services.AddMvc().AddFluentValidation(conf => conf.RegisterValidatorsFromAssemblyContaining<Startup>());
-            //services.AddTransient(typeof(ValidationBahavior<,>));
             return services;
         }
     }

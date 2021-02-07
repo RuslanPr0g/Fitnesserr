@@ -18,6 +18,7 @@ namespace WEBApi
         {
             this._provider = provider;
         }
+
         public IJWTokenManager CreateTokenManager()
         {
             string key = _provider.GetService<IConfiguration>().GetValue<string>("Key");
