@@ -3,6 +3,7 @@ import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
 import { LayoutProps } from "./LayoutProps";
+import { Button } from '@material-ui/core';
 
 const name = "Fitnesserr, to make life more fitnesser.";
 export const siteTitle = "Fitnesserr";
@@ -38,7 +39,7 @@ export default function Layout({ children, home } : LayoutProps) {
       {home && (
         <div className={styles.backToHome}>
           <Link href="/">
-            <a>← Back to home</a>
+            <Button color="secondary" size={"large"}>← Back to home</Button>
           </Link>
         </div>
       )}
