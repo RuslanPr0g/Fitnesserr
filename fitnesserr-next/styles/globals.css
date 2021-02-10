@@ -34,3 +34,11 @@ img {
   max-width: 100%;
   display: block;
 }
+
+.listing {
+  background: #ccc;
+}
+
+.listing_item:nth-child(even) {
+  background: #fafafa;
+}
